@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Report</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Weather Report</h1>
+        <form method="post" class="text-center">
+            {% csrf_token %}
+            <input type="text" name="city" placeholder="Enter city name" required>
+            <button type="submit" class="btn btn-primary">Get Weather</button>
+        </form>
+
+        {% if error_message %}
+            <div class="alert alert-danger mt-3">{{ error_message }}</div>
+        {% elif weather_data %}
+            <div class="mt-3">
+                <h2>{{ weather_data.name }}</h2>
+                <p>Temperature: {{ weather_data.main.temp }} °C</p>
+                <p>Feels Like: {{ weather_data.main.feels_like }} °C</p>
+                <p>Humidity: {{ weather_data.main.humidity }}%</p>
+                <p>Wind Speed: {{ weather_data.wind.speed }} m/s</p>
+                <p>Weather: {{ weather_data.weather.0.description }}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
